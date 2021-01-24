@@ -15,7 +15,7 @@ function App() {
   const [mapCenter, setMapCenter] = useState({
     lat:34.80746,lng:-40.4696
   })
-  const [mapZoom,setMapZoom]=useState(3)
+  const [mapZoom,setMapZoom]=useState(2)
   const [mapCountries,setMapCountries]=useState([])
   const[casesType,setCasesType]=useState("cases")
 
@@ -49,11 +49,17 @@ function App() {
     .then(data=>{
       setCountry(countryCode)
       setCountryInfo(data)
-      setMapCenter([data.countryInfo.lat,data.countryInfo.long])
-      setMapZoom(4)
+      if(countryCode!=="worldwide"){
+        setMapCenter({
+          lat:data.countryInfo.lat,
+          lng:data.countryInfo.long
+        })
+        setMapZoom(4)
+      }
       console.log(countryInfo)
     })
   }
+  console.log("lattitude is ",mapCenter)
   return (
     <div className="app">
       <div className="app__left">
@@ -86,7 +92,7 @@ function App() {
         <CardContent >
           <h3>Live Cases By Country</h3>
           <Table countries={tableData}/>
-          <h3 className="app__graphTitle">Worlwide New {casesType}</h3>
+          <h3 className="app__graphTitle">Worlwide {casesType}</h3>
           <LineGraph className="app__graph" casesType={casesType}/>
         </CardContent>
       </Card>

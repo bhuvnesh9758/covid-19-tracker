@@ -49,7 +49,7 @@ function LineGraph({casesType="cases"}) {
     const [data,setData]=useState({})
     useEffect(()=>{
         const fetchData=async ()=>{
-            await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
+            await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=90")
             .then(data=>data.json())
             .then(data=>{
                 console.log(data)
